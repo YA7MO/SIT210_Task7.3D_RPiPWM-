@@ -19,9 +19,6 @@ def pwd():
     time.sleep(0.01)
     GPIO.output(trig,False)
     
-    StartTime = time.time()
-    StopTime = time.time()
-    
     while GPIO.input(echo) == 0:
         start = time.time()
         
@@ -29,16 +26,16 @@ def pwd():
         stop = time.time()
         
     elapsedTime = stop - start
-    distance  = (elapsedTime * 34300)/2
+    distance  = (elapsedTime * 34300)/2 # distance to respect f sonic speed 
     
     if(distance<=60):
         print(distance , "distance")
         pwm.ChangeDutyCycle(100 - distance)
         time.sleep(0.5)
         
-    elif(distance > 60): # to prevent code from crashing
+    elif(distance > 60): 
         print("No object detected")
-        distance = 60
+        distance = 60 # to prevent code from crashing, since it has to be from 0.0,100.0 
         pwm.ChangeDutyCycle(0)
         time.sleep(0.01)
         
